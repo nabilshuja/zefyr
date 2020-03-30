@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:notus/notus.dart';
+import 'package:zefyr/src/widgets/latex.dart';
 
 import 'code.dart';
 import 'common.dart';
@@ -248,7 +249,9 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
 
     final BlockNode block = node;
     final blockStyle = block.style.get(NotusAttribute.block);
-    if (blockStyle == NotusAttribute.block.code) {
+    if (blockStyle == NotusAttribute.block.latex) {
+      return ZefyrLatex(node: block);
+    } else if (blockStyle == NotusAttribute.block.code) {
       return ZefyrCode(node: block);
     } else if (blockStyle == NotusAttribute.block.bulletList) {
       return ZefyrList(node: block);

@@ -203,6 +203,12 @@ class _NotusMarkdownEncoder extends Converter<Delta, String> {
       } else {
         buffer.write('```\n');
       }
+    } else if (block == NotusAttribute.latex) {
+      if (close) {
+        buffer.write('\n```');
+      } else {
+        buffer.write('```\n');
+      }
     } else {
       if (close) return; // no close tag needed for simple blocks.
 

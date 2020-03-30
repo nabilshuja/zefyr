@@ -17,6 +17,7 @@ enum ZefyrToolbarAction {
   italic,
   link,
   unlink,
+  latex,
   clipboardCopy,
   openInBrowser,
   heading,
@@ -37,6 +38,7 @@ enum ZefyrToolbarAction {
 }
 
 final kZefyrToolbarAttributeActions = <ZefyrToolbarAction, NotusAttributeKey>{
+  ZefyrToolbarAction.latex: NotusAttribute.block.latex,
   ZefyrToolbarAction.bold: NotusAttribute.bold,
   ZefyrToolbarAction.italic: NotusAttribute.italic,
   ZefyrToolbarAction.link: NotusAttribute.link,
@@ -250,6 +252,7 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
 
   List<Widget> _buildButtons(BuildContext context) {
     final buttons = <Widget>[
+      buildButton(context, ZefyrToolbarAction.latex),
       buildButton(context, ZefyrToolbarAction.bold),
       buildButton(context, ZefyrToolbarAction.italic),
       LinkButton(),
@@ -367,6 +370,7 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
     ZefyrToolbarAction.headingLevel1: 'H1',
     ZefyrToolbarAction.headingLevel2: 'H2',
     ZefyrToolbarAction.headingLevel3: 'H3',
+    ZefyrToolbarAction.latex: 'LATEX'
   };
 
   @override

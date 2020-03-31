@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
 import 'package:notus/notus.dart';
@@ -22,11 +20,10 @@ class ZefyrLatex extends StatefulWidget {
 class _ZefyrLatexState extends State<ZefyrLatex> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final zefyrTheme = ZefyrTheme.of(context);
     var scope = ZefyrScope.of(context);
     List<Widget> items = [];
-    Widget latexView = Container();
+    Widget latexView;
     String text = '';
 
     if (scope.mode.canEdit) {
@@ -51,20 +48,11 @@ class _ZefyrLatexState extends State<ZefyrLatex> {
       );
     }
 
-    final color = Colors.grey.shade200;
-    return Padding(
-      padding: zefyrTheme.attributeTheme.code.padding,
-      child: Container(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(3.0),
-        ),
-        padding: const EdgeInsets.all(16.0),
-        child: scope.mode.canEdit
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch, children: items)
-            : latexView,
-      ),
+    return Container(
+      child: scope.mode.canEdit
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch, children: items)
+          : latexView ?? Container(),
     );
   }
 

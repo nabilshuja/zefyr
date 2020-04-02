@@ -18,6 +18,7 @@ enum ZefyrToolbarAction {
   link,
   unlink,
   latex,
+  video,
   clipboardCopy,
   openInBrowser,
   heading,
@@ -38,6 +39,7 @@ enum ZefyrToolbarAction {
 }
 
 final kZefyrToolbarAttributeActions = <ZefyrToolbarAction, NotusAttributeKey>{
+  ZefyrToolbarAction.video: NotusAttribute.block.video,
   ZefyrToolbarAction.latex: NotusAttribute.block.latex,
   ZefyrToolbarAction.bold: NotusAttribute.bold,
   ZefyrToolbarAction.italic: NotusAttribute.italic,
@@ -252,6 +254,7 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
 
   List<Widget> _buildButtons(BuildContext context) {
     final buttons = <Widget>[
+      buildButton(context, ZefyrToolbarAction.video),
       buildButton(context, ZefyrToolbarAction.latex),
       buildButton(context, ZefyrToolbarAction.bold),
       buildButton(context, ZefyrToolbarAction.italic),
@@ -338,6 +341,7 @@ class _ZefyrButtonListState extends State<ZefyrButtonList> {
 
 class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
   static const kDefaultButtonIcons = {
+    ZefyrToolbarAction.video: Icons.play_circle_outline,
     ZefyrToolbarAction.bold: Icons.format_bold,
     ZefyrToolbarAction.italic: Icons.format_italic,
     ZefyrToolbarAction.link: Icons.link,

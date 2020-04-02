@@ -38,6 +38,7 @@ class _ZefyrLatexState extends State<ZefyrLatex> {
       latexView = TeXView(
         keepAlive: true,
         teXHTML: text,
+        height: 250,
         renderingEngine: RenderingEngine.Katex,
         onRenderFinished: (height) {
           print("Widget Height is : $height");

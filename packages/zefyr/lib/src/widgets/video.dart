@@ -61,7 +61,7 @@ class _ZefyrVideoState extends State<ZefyrVideo> {
       }
     } else {
       videoView = Container(
-          height: 250,
+          height: 360,
           child: HtmlElementView(key: UniqueKey(), viewType: 'video-$src'));
     }
 

@@ -7,17 +7,12 @@ import 'scope.dart';
 import 'theme.dart';
 
 /// Represents a code snippet in Zefyr editor.
-class ZefyrLatex extends StatefulWidget {
+class ZefyrLatex extends StatelessWidget {
   const ZefyrLatex({Key key, @required this.node}) : super(key: key);
 
   /// Document node represented by this widget.
   final BlockNode node;
 
-  @override
-  _ZefyrLatexState createState() => _ZefyrLatexState();
-}
-
-class _ZefyrLatexState extends State<ZefyrLatex> {
   @override
   Widget build(BuildContext context) {
     final zefyrTheme = ZefyrTheme.of(context);
@@ -27,12 +22,12 @@ class _ZefyrLatexState extends State<ZefyrLatex> {
     String text = '';
 
     if (scope.mode.canEdit) {
-      for (var line in widget.node.children) {
+      for (var line in node.children) {
         items.add(_buildLine(
             line, zefyrTheme.attributeTheme.code.textStyle, context));
       }
     } else {
-      for (var line in widget.node.children) {
+      for (var line in node.children) {
         text += line.toPlainText();
       }
       latexView = TeXView(

@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:notus/notus.dart';
 
@@ -106,7 +107,7 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
   const ZefyrToolbar({
     Key key,
     @required this.editor,
-    this.autoHide = true,
+    this.autoHide = false,
     this.delegate,
   }) : super(key: key);
 
@@ -355,7 +356,8 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
     ZefyrToolbarAction.quote: Icons.format_quote,
     ZefyrToolbarAction.horizontalRule: Icons.remove,
     ZefyrToolbarAction.image: Icons.photo,
-    ZefyrToolbarAction.cameraImage: Icons.photo_camera,
+    ZefyrToolbarAction.cameraImage:
+        kIsWeb ? Icons.add_photo_alternate : Icons.photo_camera,
     ZefyrToolbarAction.galleryImage: Icons.photo_library,
     ZefyrToolbarAction.hideKeyboard: Icons.keyboard_hide,
     ZefyrToolbarAction.close: Icons.close,

@@ -129,7 +129,7 @@ class NotusAttribute<T> implements NotusAttributeBuilder<T> {
   /// Alias for [NotusAttribute.block.latex].
   static NotusAttribute<String> get latex => block.latex;
 
-  /// Alias for [NotusAttribute.block.latex].
+  /// Alias for [NotusAttribute.block.video].
   static NotusAttribute<String> get video => block.video;
 
   /// Embed style attribute.
@@ -404,7 +404,7 @@ class BlockAttributeBuilder extends NotusAttributeBuilder<String> {
   NotusAttribute<String> get latex =>
       NotusAttribute<String>._(key, scope, 'latex');
 
-  /// Formats a block of lines as latex.
+  /// Formats a block of lines as video.
   NotusAttribute<String> get video =>
       NotusAttribute<String>._(key, scope, 'video');
 }

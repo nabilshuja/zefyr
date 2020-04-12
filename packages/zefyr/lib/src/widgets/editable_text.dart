@@ -5,8 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:notus/notus.dart';
-import 'package:zefyr/src/widgets/latex.dart';
-import 'package:zefyr/src/widgets/video.dart';
+import 'package:zefyr/custom/scrollbar.dart';
 
 import 'code.dart';
 import 'common.dart';
@@ -15,6 +14,7 @@ import 'cursor_timer.dart';
 import 'editor.dart';
 import 'image.dart';
 import 'input.dart';
+import 'latex.dart';
 import 'list.dart';
 import 'mode.dart';
 import 'paragraph.dart';
@@ -23,6 +23,7 @@ import 'render_context.dart';
 import 'scope.dart';
 import 'selection.dart';
 import 'theme.dart';
+import 'video.dart';
 
 /// Core widget responsible for editing Zefyr documents.
 ///
@@ -154,11 +155,15 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
       body = Padding(padding: widget.padding, child: body);
     }
 
-    body = SingleChildScrollView(
-      physics: widget.physics,
-      controller: _scrollController,
-      child: body,
-    );
+    body = PrimaryScrollController(
+        controller: _scrollController,
+        child: CustomScrollbar(
+            controller: _scrollController,
+            child: SingleChildScrollView(
+              physics: widget.physics,
+              controller: _scrollController,
+              child: body,
+            )));
 
     final layers = <Widget>[body];
     layers.add(ZefyrSelectionOverlay(

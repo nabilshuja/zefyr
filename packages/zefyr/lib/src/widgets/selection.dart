@@ -4,6 +4,7 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -37,6 +38,7 @@ class ZefyrSelectionOverlay extends StatefulWidget {
 class _ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
     implements TextSelectionDelegate {
   TextSelectionControls _controls;
+
   TextSelectionControls get controls => _controls;
 
   /// Global position of last TapDown event.
@@ -80,6 +82,7 @@ class _ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
   }
 
   bool get isToolbarVisible => _toolbar != null;
+
   bool get isToolbarHidden => _toolbar == null;
 
   @override
@@ -297,7 +300,7 @@ class _ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
   bool get pasteEnabled => _scope.mode.canEdit;
 
   @override
-  bool get selectAllEnabled => _scope.mode.canSelect;
+  bool get selectAllEnabled => kIsWeb ? false : _scope.mode.canSelect;
 }
 
 enum _SelectionHandlePosition { base, extent }
@@ -546,7 +549,9 @@ class _SelectionToolbar extends StatefulWidget {
 
 class _SelectionToolbarState extends State<_SelectionToolbar> {
   TextSelectionControls get controls => widget.selectionOverlay.controls;
+
   ZefyrScope get scope => widget.selectionOverlay.scope;
+
   TextSelection get selection =>
       widget.selectionOverlay.textEditingValue.selection;
 

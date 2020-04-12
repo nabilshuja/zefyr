@@ -9,43 +9,11 @@ import 'scope.dart';
 import 'theme.dart';
 
 /// Represents a code snippet in Zefyr editor.
-class ZefyrVideo extends StatefulWidget {
-  //TODO: should rely on embed
-  const ZefyrVideo({Key key, @required this.node}) : super(key: key);
+class ZefyrVideo extends StatelessWidget {
+  ZefyrVideo({Key key, @required this.node}) : super(key: key);
 
   /// Document node represented by this widget.
   final BlockNode node;
-
-  @override
-  _ZefyrVideoState createState() => _ZefyrVideoState();
-}
-
-class _ZefyrVideoState extends State<ZefyrVideo> {
-  String src = '';
-
-  @override
-  void initState() {
-    for (var line in widget.node.children) {
-      src += line.toPlainText();
-    }
-
-    // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory(
-        'video-$src',
-        (int viewId) => IFrameElement()
-          ..width = '640'
-          ..height = '360'
-          ..src = src
-          ..style.border = 'none');
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    src = '';
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +23,17 @@ class _ZefyrVideoState extends State<ZefyrVideo> {
     Widget videoView;
 
     if (scope.mode.canEdit) {
-      for (var line in widget.node.children) {
+      for (var line in node.children) {
         items.add(_buildLine(
             line, zefyrTheme.attributeTheme.code.textStyle, context));
       }
     } else {
-      videoView = Container(
-          height: 360,
-          child: HtmlElementView(key: UniqueKey(), viewType: 'video-$src'));
+      videoView = iFrameVideo();
     }
 
-    return Container(
+    return SizedBox(
+      width: 640,
+      height: 360,
       child: scope.mode.canEdit
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.stretch, children: items)
@@ -76,5 +44,18 @@ class _ZefyrVideoState extends State<ZefyrVideo> {
   Widget _buildLine(Node node, TextStyle style, BuildContext context) {
     LineNode line = node;
     return ZefyrLine(node: line, style: style);
+  }
+
+  Widget iFrameVideo() {
+    // ignore: undefined_prefixed_name
+    ui.platformViewRegistry.registerViewFactory('video-$node.toPlainText()',
+        (int viewId) {
+      return IFrameElement()
+        ..width = '640'
+        ..height = '360'
+        ..src = node.toPlainText()
+        ..style.border = 'none';
+    });
+    return HtmlElementView(viewType: 'video-$node.toPlainText()');
   }
 }

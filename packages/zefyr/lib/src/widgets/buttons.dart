@@ -1,6 +1,7 @@
 // Copyright (c) 2018, the Zefyr project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notus/notus.dart';
@@ -270,7 +271,7 @@ class _ImageButtonState extends State<ImageButton> {
         toolbar.buildButton(context, ZefyrToolbarAction.cameraImage,
             onPressed: _pickFromCamera),
         toolbar.buildButton(context, ZefyrToolbarAction.galleryImage,
-            onPressed: _pickFromGallery),
+            onPressed: kIsWeb ? null : _pickFromGallery),
       ],
     );
     return ZefyrToolbarScaffold(body: buttons);
@@ -442,6 +443,7 @@ class _LinkButtonState extends State<LinkButton> {
             key: _inputKey,
             controller: _inputController,
             formatError: _formatError,
+            doneEdit: doneEdit,
           );
     final items = <Widget>[Expanded(child: body)];
     if (!isEditing) {
@@ -467,11 +469,13 @@ class _LinkButtonState extends State<LinkButton> {
 
     return ZefyrToolbarScaffold(
       body: Row(children: items),
-      trailing: toolbar.buildButton(
-        context,
-        trailingAction,
-        onPressed: trailingPressed,
-      ),
+      trailing: !isEditing
+          ? toolbar.buildButton(
+              context,
+              trailingAction,
+              onPressed: trailingPressed,
+            )
+          : Container(),
     );
   }
 }
@@ -479,9 +483,13 @@ class _LinkButtonState extends State<LinkButton> {
 class _LinkInput extends StatefulWidget {
   final TextEditingController controller;
   final bool formatError;
+  final Function doneEdit;
 
   const _LinkInput(
-      {Key key, @required this.controller, this.formatError = false})
+      {Key key,
+      @required this.controller,
+      this.formatError = false,
+      this.doneEdit})
       : super(key: key);
 
   @override
@@ -534,6 +542,9 @@ class _LinkInputState extends State<_LinkInput> {
       focusNode: _focusNode,
       controller: widget.controller,
       autofocus: true,
+      onSubmitted: (value) {
+        widget.doneEdit();
+      },
       decoration: InputDecoration(
         hintText: 'https://',
         filled: true,

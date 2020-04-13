@@ -23,9 +23,14 @@ class ZefyrView extends StatefulWidget {
   final NotusDocument document;
   final ZefyrImageDelegate imageDelegate;
   final ZefyrAttrDelegate attrDelegate;
+  final double latexHeight;
 
   const ZefyrView(
-      {Key key, @required this.document, this.imageDelegate, this.attrDelegate})
+      {Key key,
+      @required this.document,
+      this.imageDelegate,
+      this.attrDelegate,
+      this.latexHeight})
       : super(key: key);
 
   @override
@@ -105,7 +110,7 @@ class ZefyrViewState extends State<ZefyrView> {
     if (blockStyle == NotusAttribute.block.video) {
       return ZefyrVideo(node: block);
     } else if (blockStyle == NotusAttribute.block.latex) {
-      return ZefyrLatex(node: block);
+      return ZefyrLatex(node: block, height: widget.latexHeight);
     } else if (blockStyle == NotusAttribute.block.code) {
       return ZefyrCode(node: block);
     } else if (blockStyle == NotusAttribute.block.bulletList) {

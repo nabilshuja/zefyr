@@ -33,18 +33,19 @@ import 'video.dart';
 /// Consider using [ZefyrEditor] which wraps this widget and adds a toolbar to
 /// edit style attributes.
 class ZefyrEditableText extends StatefulWidget {
-  const ZefyrEditableText({
-    Key key,
-    @required this.controller,
-    @required this.focusNode,
-    @required this.imageDelegate,
-    this.selectionControls,
-    this.autofocus = true,
-    this.mode = ZefyrMode.edit,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16.0),
-    this.physics,
-    this.keyboardAppearance = Brightness.light,
-  })  : assert(mode != null),
+  const ZefyrEditableText(
+      {Key key,
+      @required this.controller,
+      @required this.focusNode,
+      @required this.imageDelegate,
+      this.selectionControls,
+      this.autofocus = true,
+      this.mode = ZefyrMode.edit,
+      this.padding = const EdgeInsets.symmetric(horizontal: 16.0),
+      this.physics,
+      this.keyboardAppearance = Brightness.light,
+      this.latexHeight})
+      : assert(mode != null),
         assert(controller != null),
         assert(focusNode != null),
         assert(keyboardAppearance != null),
@@ -86,6 +87,8 @@ class ZefyrEditableText extends StatefulWidget {
   ///
   /// If unset, defaults to the brightness of [Brightness.light].
   final Brightness keyboardAppearance;
+
+  final double latexHeight;
 
   @override
   _ZefyrEditableTextState createState() => _ZefyrEditableTextState();
@@ -258,7 +261,7 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
     if (blockStyle == NotusAttribute.block.video) {
       return ZefyrVideo(node: block);
     } else if (blockStyle == NotusAttribute.block.latex) {
-      return ZefyrLatex(node: block);
+      return ZefyrLatex(node: block, height: widget.latexHeight);
     } else if (blockStyle == NotusAttribute.block.code) {
       return ZefyrCode(node: block);
     } else if (blockStyle == NotusAttribute.block.bulletList) {

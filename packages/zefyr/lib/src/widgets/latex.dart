@@ -8,10 +8,12 @@ import 'theme.dart';
 
 /// Represents a code snippet in Zefyr editor.
 class ZefyrLatex extends StatelessWidget {
-  const ZefyrLatex({Key key, @required this.node}) : super(key: key);
+  const ZefyrLatex({Key key, @required this.node, this.height})
+      : super(key: key);
 
   /// Document node represented by this widget.
   final BlockNode node;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class ZefyrLatex extends StatelessWidget {
       latexView = TeXView(
         keepAlive: true,
         teXHTML: text,
-        height: 150,
+        height: height ?? 75,
         renderingEngine: RenderingEngine.Katex,
         onRenderFinished: (height) {
           print("Widget Height is : $height");

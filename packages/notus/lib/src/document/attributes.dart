@@ -132,6 +132,9 @@ class NotusAttribute<T> implements NotusAttributeBuilder<T> {
   /// Alias for [NotusAttribute.block.video].
   static NotusAttribute<String> get video => block.video;
 
+  /// Alias for [NotusAttribute.block.expandable].
+  static NotusAttribute<String> get expandable => block.expandable;
+
   /// Embed style attribute.
   // ignore: const_eval_throws_exception
   static const embed = EmbedAttributeBuilder._();
@@ -407,6 +410,10 @@ class BlockAttributeBuilder extends NotusAttributeBuilder<String> {
   /// Formats a block of lines as video.
   NotusAttribute<String> get video =>
       NotusAttribute<String>._(key, scope, 'video');
+
+  /// Formats a block of lines as expandable.
+  NotusAttribute<String> get expandable =>
+      NotusAttribute<String>._(key, scope, 'expandable');
 }
 
 class EmbedAttributeBuilder

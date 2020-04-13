@@ -37,11 +37,10 @@ enum ZefyrToolbarAction {
   hideKeyboard,
   close,
   confirm,
+  expandable
 }
 
 final kZefyrToolbarAttributeActions = <ZefyrToolbarAction, NotusAttributeKey>{
-  ZefyrToolbarAction.video: NotusAttribute.block.video,
-  ZefyrToolbarAction.latex: NotusAttribute.block.latex,
   ZefyrToolbarAction.bold: NotusAttribute.bold,
   ZefyrToolbarAction.italic: NotusAttribute.italic,
   ZefyrToolbarAction.link: NotusAttribute.link,
@@ -54,6 +53,9 @@ final kZefyrToolbarAttributeActions = <ZefyrToolbarAction, NotusAttributeKey>{
   ZefyrToolbarAction.code: NotusAttribute.block.code,
   ZefyrToolbarAction.quote: NotusAttribute.block.quote,
   ZefyrToolbarAction.horizontalRule: NotusAttribute.embed.horizontalRule,
+  ZefyrToolbarAction.video: NotusAttribute.block.video,
+  ZefyrToolbarAction.latex: NotusAttribute.block.latex,
+  ZefyrToolbarAction.expandable: NotusAttribute.block.expandable,
 };
 
 /// Allows customizing appearance of [ZefyrToolbar].
@@ -255,8 +257,6 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
 
   List<Widget> _buildButtons(BuildContext context) {
     final buttons = <Widget>[
-      buildButton(context, ZefyrToolbarAction.video),
-      buildButton(context, ZefyrToolbarAction.latex),
       buildButton(context, ZefyrToolbarAction.bold),
       buildButton(context, ZefyrToolbarAction.italic),
       LinkButton(),
@@ -267,6 +267,9 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
       buildButton(context, ZefyrToolbarAction.code),
       buildButton(context, ZefyrToolbarAction.horizontalRule),
       if (editor.imageDelegate != null) ImageButton(),
+      buildButton(context, ZefyrToolbarAction.video),
+      buildButton(context, ZefyrToolbarAction.latex),
+      buildButton(context, ZefyrToolbarAction.expandable),
     ];
     return buttons;
   }
@@ -362,6 +365,7 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
     ZefyrToolbarAction.hideKeyboard: Icons.keyboard_hide,
     ZefyrToolbarAction.close: Icons.close,
     ZefyrToolbarAction.confirm: Icons.check,
+    ZefyrToolbarAction.expandable: Icons.keyboard_arrow_down,
   };
 
   static const kSpecialIconSizes = {

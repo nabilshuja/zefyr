@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:notus/notus.dart';
 import 'package:zefyr/custom/scrollbar.dart';
+import 'package:zefyr/src/widgets/expandable.dart';
 
 import 'code.dart';
 import 'common.dart';
@@ -258,7 +259,9 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
 
     final BlockNode block = node;
     final blockStyle = block.style.get(NotusAttribute.block);
-    if (blockStyle == NotusAttribute.block.video) {
+    if (blockStyle == NotusAttribute.block.expandable) {
+      return ZefyrExpandable(node: block);
+    } else if (blockStyle == NotusAttribute.block.video) {
       return ZefyrVideo(node: block);
     } else if (blockStyle == NotusAttribute.block.latex) {
       return ZefyrLatex(node: block, height: widget.latexHeight);

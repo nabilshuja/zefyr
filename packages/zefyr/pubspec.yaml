@@ -22,6 +22,7 @@ dependencies:
   flutter_tex:
     git:
       url: https://github.com/nabilshuja/flutter_tex.git
+  expandable: ^4.1.3
 
 dev_dependencies:
   flutter_test:

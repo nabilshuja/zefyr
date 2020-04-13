@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:notus/notus.dart';
+import 'package:zefyr/src/widgets/expandable.dart';
 import 'package:zefyr/src/widgets/latex.dart';
 import 'package:zefyr/src/widgets/video.dart';
 import 'package:zefyr/zefyr.dart';
@@ -107,7 +108,9 @@ class ZefyrViewState extends State<ZefyrView> {
 
     final BlockNode block = node;
     final blockStyle = block.style.get(NotusAttribute.block);
-    if (blockStyle == NotusAttribute.block.video) {
+    if (blockStyle == NotusAttribute.block.expandable) {
+      return ZefyrExpandable(node: block);
+    } else if (blockStyle == NotusAttribute.block.video) {
       return ZefyrVideo(node: block);
     } else if (blockStyle == NotusAttribute.block.latex) {
       return ZefyrLatex(node: block, height: widget.latexHeight);

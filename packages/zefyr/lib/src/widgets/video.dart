@@ -31,14 +31,16 @@ class ZefyrVideo extends StatelessWidget {
       videoView = iFrameVideo();
     }
 
-    return SizedBox(
-      width: 640,
-      height: 360,
-      child: scope.mode.canEdit
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch, children: items)
-          : videoView ?? Container(),
-    );
+    return Container(
+        alignment: Alignment.center,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 360, maxWidth: 640),
+          child: scope.mode.canEdit
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: items)
+              : videoView ?? Container(),
+        ));
   }
 
   Widget _buildLine(Node node, TextStyle style, BuildContext context) {
@@ -48,7 +50,7 @@ class ZefyrVideo extends StatelessWidget {
 
   Widget iFrameVideo() {
     // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory('video-$node.toPlainText()',
+    ui.platformViewRegistry.registerViewFactory('video-${node.toPlainText()}',
         (int viewId) {
       return IFrameElement()
         ..width = '640'
@@ -56,6 +58,6 @@ class ZefyrVideo extends StatelessWidget {
         ..src = node.toPlainText()
         ..style.border = 'none';
     });
-    return HtmlElementView(viewType: 'video-$node.toPlainText()');
+    return HtmlElementView(viewType: 'video-${node.toPlainText()}');
   }
 }

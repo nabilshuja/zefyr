@@ -567,6 +567,9 @@ class _SelectionToolbarState extends State<_SelectionToolbar> {
       return Container();
     }
     final boxes = block.getEndpointsForSelection(selection);
+    if (boxes.isEmpty) {
+      return Container();
+    }
     // Find the horizontal midpoint, just above the selected text.
     Offset midpoint = Offset(
       (boxes.length == 1)

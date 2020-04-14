@@ -34,15 +34,11 @@ class _ZefyrExpandableState extends State<ZefyrExpandable> {
     } else {
       expandableView = ExpandablePanel(
           controller: controller,
-          header: GestureDetector(
-              onLongPress: () {
-                print('clicked');
-              },
-              child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: ZefyrLine(
-                      node: widget.node.children.first,
-                      style: zefyrTheme.attributeTheme.heading3.textStyle))),
+          header: Padding(
+              padding: EdgeInsets.all(16),
+              child: ZefyrLine(
+                  node: widget.node.children.first,
+                  style: zefyrTheme.attributeTheme.heading3.textStyle)),
           expanded: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: widget.node.children?.map((line) {

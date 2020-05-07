@@ -5,6 +5,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:example/src/video.dart';
 import 'package:flutter/material.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:zefyr/zefyr.dart';
@@ -88,6 +89,7 @@ class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
           focusNode: _focusNode,
           mode: _editing ? ZefyrMode.edit : ZefyrMode.select,
           imageDelegate: CustomImageDelegate(),
+          videoDelegate: CustomVideoDelegate(context),
           keyboardAppearance: _darkTheme ? Brightness.dark : Brightness.light,
         ),
       ),

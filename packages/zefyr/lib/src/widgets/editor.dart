@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:zefyr/src/widgets/attr_delegate.dart';
+import 'package:zefyr/src/widgets/video.dart';
 
 import 'controller.dart';
 import 'editable_text.dart';
@@ -26,6 +27,7 @@ class ZefyrEditor extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 16.0),
     this.toolbarDelegate,
     this.imageDelegate,
+    this.videoDelegate,
     this.selectionControls,
     this.attrDelegate,
     this.physics,
@@ -63,6 +65,8 @@ class ZefyrEditor extends StatefulWidget {
   /// This delegate is required if embedding images is allowed.
   final ZefyrImageDelegate imageDelegate;
 
+  final ZefyrVideoDelegate videoDelegate;
+
   /// Optional delegate for building the text selection handles and toolbar.
   ///
   /// If not provided then platform-specific implementation is used by default.
@@ -88,6 +92,7 @@ class ZefyrEditor extends StatefulWidget {
 class _ZefyrEditorState extends State<ZefyrEditor> {
   ZefyrImageDelegate _imageDelegate;
   ZefyrAttrDelegate _attrDelegate;
+  ZefyrVideoDelegate _videoDelegate;
   ZefyrScope _scope;
   ZefyrThemeData _themeData;
   GlobalKey<ZefyrToolbarState> _toolbarKey;
@@ -136,6 +141,7 @@ class _ZefyrEditorState extends State<ZefyrEditor> {
     super.initState();
     _imageDelegate = widget.imageDelegate;
     _attrDelegate = widget.attrDelegate;
+    _videoDelegate = widget.videoDelegate;
   }
 
   @override
@@ -152,6 +158,10 @@ class _ZefyrEditorState extends State<ZefyrEditor> {
       _attrDelegate = widget.attrDelegate;
       _scope.attrDelegate = _attrDelegate;
     }
+    if (widget.videoDelegate != oldWidget.videoDelegate) {
+      _videoDelegate = widget.videoDelegate;
+      _scope.videoDelegate = _videoDelegate;
+    }
   }
 
   @override
@@ -167,6 +177,7 @@ class _ZefyrEditorState extends State<ZefyrEditor> {
       _scope = ZefyrScope.editable(
         mode: widget.mode,
         imageDelegate: _imageDelegate,
+        videoDelegate: _videoDelegate,
         attrDelegate: _attrDelegate,
         controller: widget.controller,
         focusNode: widget.focusNode,
@@ -205,6 +216,7 @@ class _ZefyrEditorState extends State<ZefyrEditor> {
       controller: _scope.controller,
       focusNode: _scope.focusNode,
       imageDelegate: _scope.imageDelegate,
+      videoDelegate: _scope.videoDelegate,
       selectionControls: widget.selectionControls,
       autofocus: widget.autofocus,
       mode: widget.mode,

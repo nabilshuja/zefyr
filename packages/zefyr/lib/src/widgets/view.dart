@@ -110,8 +110,6 @@ class ZefyrViewState extends State<ZefyrView> {
     final blockStyle = block.style.get(NotusAttribute.block);
     if (blockStyle == NotusAttribute.block.expandable) {
       return ZefyrExpandable(node: block);
-    } else if (blockStyle == NotusAttribute.block.video) {
-      return ZefyrVideo(node: block);
     } else if (blockStyle == NotusAttribute.block.latex) {
       return ZefyrLatex(node: block, height: widget.latexHeight);
     } else if (blockStyle == NotusAttribute.block.code) {

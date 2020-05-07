@@ -2,12 +2,12 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:notus/notus.dart';
-import 'package:zefyr/src/widgets/attr_delegate.dart';
+import 'package:zefyr/src/widgets/video.dart';
 
 import 'editable_box.dart';
 import 'horizontal_rule.dart';
@@ -173,6 +173,8 @@ class _ZefyrLineState extends State<ZefyrLine> {
       return ZefyrHorizontalRule(node: node);
     } else if (embed.type == EmbedType.image) {
       return ZefyrImage(node: node, delegate: scope.imageDelegate);
+    } else if (embed.type == EmbedType.video) {
+      return ZefyrVideo(node: node, delegate: scope.videoDelegate);
     } else {
       throw UnimplementedError('Unimplemented embed type ${embed.type}');
     }

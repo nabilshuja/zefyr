@@ -236,6 +236,30 @@ class _HeadingButtonState extends State<HeadingButton> {
   }
 }
 
+class VideoButton extends StatefulWidget {
+  const VideoButton({Key key}) : super(key: key);
+
+  @override
+  _VideoButtonState createState() => _VideoButtonState();
+}
+
+class _VideoButtonState extends State<VideoButton> {
+  @override
+  Widget build(BuildContext context) {
+    final toolbar = ZefyrToolbar.of(context);
+    return toolbar.buildButton(context, ZefyrToolbarAction.videoDelegate,
+        onPressed: _addVideo);
+  }
+
+  void _addVideo() async {
+    final editor = ZefyrToolbar.of(context).editor;
+    final video = await editor.videoDelegate.pickVideo();
+    if (video != null) {
+      editor.formatSelection(NotusAttribute.embed.video(video));
+    }
+  }
+}
+
 /// Controls image attribute.
 ///
 /// When pressed, this button displays overlay toolbar with three
@@ -251,11 +275,15 @@ class _ImageButtonState extends State<ImageButton> {
   @override
   Widget build(BuildContext context) {
     final toolbar = ZefyrToolbar.of(context);
-    return toolbar.buildButton(
-      context,
-      ZefyrToolbarAction.image,
-      onPressed: showOverlay,
-    );
+    if (!kIsWeb) {
+      return toolbar.buildButton(
+        context,
+        ZefyrToolbarAction.image,
+        onPressed: showOverlay,
+      );
+    }
+    return toolbar.buildButton(context, ZefyrToolbarAction.cameraImage,
+        onPressed: _pickFromCamera);
   }
 
   void showOverlay() {

@@ -33,6 +33,7 @@ enum ZefyrToolbarAction {
   horizontalRule,
   image,
   cameraImage,
+  videoDelegate,
   galleryImage,
   hideKeyboard,
   close,
@@ -266,8 +267,8 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
       buildButton(context, ZefyrToolbarAction.quote),
       buildButton(context, ZefyrToolbarAction.code),
       buildButton(context, ZefyrToolbarAction.horizontalRule),
+      if (editor.videoDelegate != null) VideoButton(),
       if (editor.imageDelegate != null) ImageButton(),
-      buildButton(context, ZefyrToolbarAction.video),
       buildButton(context, ZefyrToolbarAction.latex),
       buildButton(context, ZefyrToolbarAction.expandable),
     ];
@@ -358,6 +359,7 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
     ZefyrToolbarAction.code: Icons.code,
     ZefyrToolbarAction.quote: Icons.format_quote,
     ZefyrToolbarAction.horizontalRule: Icons.remove,
+    ZefyrToolbarAction.videoDelegate: Icons.video_library,
     ZefyrToolbarAction.image: Icons.photo,
     ZefyrToolbarAction.cameraImage:
         kIsWeb ? Icons.add_photo_alternate : Icons.photo_camera,

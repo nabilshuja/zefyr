@@ -54,7 +54,7 @@ class CustomVideoDelegate implements ZefyrVideoDelegate {
                 Expanded(
                     child: TextField(
                   controller: controller,
-                  decoration: InputDecoration(hintText: 'Add a Image Url'),
+                  decoration: InputDecoration(hintText: 'Add a video Url'),
                 )),
                 IconButton(
                   icon: Icon(Icons.send),

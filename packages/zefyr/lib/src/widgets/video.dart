@@ -210,9 +210,9 @@ class RenderEditableVideo extends RenderBox
       final width = constraints.maxWidth - kHorizontalPadding * 2;
       final childConstraints = constraints.copyWith(
         minWidth: 0.0,
-        maxWidth: width,
+        maxWidth: 641,
         minHeight: 0.0,
-        maxHeight: (width * 9 / 16).floorToDouble(),
+        maxHeight: 361,
       );
       child.layout(childConstraints, parentUsesSize: true);
       _lastChildSize = child.size;

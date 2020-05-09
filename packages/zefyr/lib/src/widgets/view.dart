@@ -23,6 +23,7 @@ import 'theme.dart';
 class ZefyrView extends StatefulWidget {
   final NotusDocument document;
   final ZefyrImageDelegate imageDelegate;
+  final ZefyrVideoDelegate videoDelegate;
   final ZefyrAttrDelegate attrDelegate;
   final double latexHeight;
 
@@ -30,6 +31,7 @@ class ZefyrView extends StatefulWidget {
       {Key key,
       @required this.document,
       this.imageDelegate,
+      this.videoDelegate,
       this.attrDelegate,
       this.latexHeight})
       : super(key: key);
@@ -44,17 +46,22 @@ class ZefyrViewState extends State<ZefyrView> {
 
   ZefyrImageDelegate get imageDelegate => widget.imageDelegate;
 
+  ZefyrVideoDelegate get videoDelegate => widget.videoDelegate;
+
   @override
   void initState() {
     super.initState();
     _scope = ZefyrScope.view(
-        imageDelegate: widget.imageDelegate, attrDelegate: widget.attrDelegate);
+        imageDelegate: widget.imageDelegate,
+        attrDelegate: widget.attrDelegate,
+        videoDelegate: widget.videoDelegate);
   }
 
   @override
   void didUpdateWidget(ZefyrView oldWidget) {
     super.didUpdateWidget(oldWidget);
     _scope.imageDelegate = widget.imageDelegate;
+    _scope.videoDelegate = widget.videoDelegate;
     _scope.attrDelegate = widget.attrDelegate;
   }
 

@@ -103,11 +103,6 @@ class Video extends StatelessWidget {
         ));
   }
 
-  Widget _buildLine(Node node, TextStyle style, BuildContext context) {
-    LineNode line = node;
-    return ZefyrLine(node: line, style: style);
-  }
-
   Widget iFrameVideo() {
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory('video-${node}', (int viewId) {

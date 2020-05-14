@@ -1,7 +1,6 @@
 // Copyright (c) 2018, the Zefyr project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
@@ -10,6 +9,7 @@ import 'package:notus/notus.dart';
 
 import 'caret.dart';
 import 'render_context.dart';
+import 'rich_text.dart';
 
 class EditableBox extends SingleChildRenderObjectWidget {
   EditableBox({
@@ -98,12 +98,14 @@ class RenderEditableProxyBox extends RenderBox
 
   LayerLink get layerLink => _layerLink;
   LayerLink _layerLink;
+
   set layerLink(LayerLink value) {
     if (_layerLink == value) return;
     _layerLink = value;
   }
 
   ZefyrRenderContext _renderContext;
+
   set renderContext(ZefyrRenderContext value) {
     if (_renderContext == value) return;
     if (attached) _renderContext.removeBox(this);
@@ -112,6 +114,7 @@ class RenderEditableProxyBox extends RenderBox
   }
 
   ValueNotifier<bool> _showCursor;
+
   set showCursor(ValueNotifier<bool> value) {
     assert(value != null);
     if (_showCursor == value) return;
@@ -124,6 +127,7 @@ class RenderEditableProxyBox extends RenderBox
   /// Current document selection.
   TextSelection get selection => _selection;
   TextSelection _selection;
+
   set selection(TextSelection value) {
     if (_selection == value) return;
     // TODO: check if selection affects this block (also check previous value)
@@ -134,6 +138,7 @@ class RenderEditableProxyBox extends RenderBox
   /// Color of selection.
   Color get selectionColor => _selectionColor;
   Color _selectionColor;
+
   set selectionColor(Color value) {
     if (_selectionColor == value) return;
     _selectionColor = value;
@@ -296,9 +301,11 @@ enum SelectionOrder {
 
 abstract class RenderEditableBox extends RenderBox {
   Node get node;
+
   double get preferredLineHeight;
 
   TextPosition getPositionForOffset(Offset offset);
+
   List<ui.TextBox> getEndpointsForSelection(TextSelection selection);
 
   /// Returns the text range of the word at the given offset. Characters not

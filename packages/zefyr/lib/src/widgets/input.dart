@@ -97,9 +97,6 @@ class InputConnectionController implements TextInputClient {
   @override
   void performAction(TextInputAction action) {
     // no-op
-    final val = _lastKnownRemoteTextEditingValue;
-    onValueChanged(val.selection.start, '', '\n',
-        TextSelection.collapsed(offset: val.selection.start + 1));
   }
 
   @override
@@ -162,22 +159,8 @@ class InputConnectionController implements TextInputClient {
   }
 
   @override
-  void showAutocorrectionPromptRect(int start, int end) {
-    // TODO: implement showAutocorrectionPromptRect
-  }
-
-  @override
-  // TODO: implement currentTextEditingValue
   TextEditingValue get currentTextEditingValue =>
       _lastKnownRemoteTextEditingValue;
-
-  //
-  // Private members
-  //
-
-  final List<TextEditingValue> _sentRemoteValues = [];
-  TextInputConnection _textInputConnection;
-  TextEditingValue _lastKnownRemoteTextEditingValue;
 
   @override
   void updateFloatingCursor(RawFloatingCursorPoint point) {
@@ -192,5 +175,22 @@ class InputConnectionController implements TextInputClient {
       _lastKnownRemoteTextEditingValue = null;
       _sentRemoteValues.clear();
     }
+  }
+
+  //
+  // Private members
+  //
+
+  final List<TextEditingValue> _sentRemoteValues = [];
+  TextInputConnection _textInputConnection;
+  TextEditingValue _lastKnownRemoteTextEditingValue;
+
+  // TODO: figure out if we need to support autofill
+  @override
+  AutofillScope get currentAutofillScope => null;
+
+  @override
+  void showAutocorrectionPromptRect(int start, int end) {
+    // TODO: implement showAutocorrectionPromptRect
   }
 }

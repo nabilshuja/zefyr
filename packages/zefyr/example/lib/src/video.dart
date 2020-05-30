@@ -44,7 +44,7 @@ class CustomVideoDelegate implements ZefyrVideoDelegate {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.0)),
           title: Text(
-            "Add Video",
+            'Add Video',
             style: TextStyle(fontSize: 22.0),
           ),
           content: IntrinsicHeight(
@@ -104,7 +104,6 @@ class Video extends StatelessWidget {
   }
 
   Widget iFrameVideo() {
-    // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory('video-${node}', (int viewId) {
       return IFrameElement()
         ..width = '640'

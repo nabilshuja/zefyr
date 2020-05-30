@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 
 import 'src/form.dart';
 import 'src/full_page.dart';
-import 'src/view.dart';
 import 'src/text_field_page.dart';
+import 'src/view.dart';
 
 void main() {
   runApp(ZefyrApp());
@@ -26,10 +26,10 @@ class ZefyrApp extends StatelessWidget {
       // otherwise it makes the keyboard flicker when we move with arrows)
       shortcuts: Map<LogicalKeySet, Intent>.from(WidgetsApp.defaultShortcuts)
         ..addAll(<LogicalKeySet, Intent>{
-          LogicalKeySet(LogicalKeyboardKey.arrowLeft): const FakeFocusIntent(),
-          LogicalKeySet(LogicalKeyboardKey.arrowRight): const FakeFocusIntent(),
-          LogicalKeySet(LogicalKeyboardKey.arrowDown): const FakeFocusIntent(),
-          LogicalKeySet(LogicalKeyboardKey.arrowUp): const FakeFocusIntent(),
+          LogicalKeySet(LogicalKeyboardKey.arrowLeft): FakeFocusIntent(),
+          LogicalKeySet(LogicalKeyboardKey.arrowRight): FakeFocusIntent(),
+          LogicalKeySet(LogicalKeyboardKey.arrowDown): FakeFocusIntent(),
+          LogicalKeySet(LogicalKeyboardKey.arrowUp): FakeFocusIntent(),
         }),
       debugShowCheckedModeBanner: false,
       title: 'Zefyr Editor',

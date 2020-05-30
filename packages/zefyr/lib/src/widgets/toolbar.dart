@@ -260,7 +260,7 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
     final buttons = <Widget>[
       buildButton(context, ZefyrToolbarAction.bold),
       buildButton(context, ZefyrToolbarAction.italic),
-      LinkButton(),
+      LinkButton(editor: widget.editor),
       HeadingButton(),
       buildButton(context, ZefyrToolbarAction.bulletList),
       buildButton(context, ZefyrToolbarAction.numberList),

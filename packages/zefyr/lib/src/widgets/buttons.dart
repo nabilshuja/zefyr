@@ -434,7 +434,6 @@ class _LinkButtonState extends State<LinkButton> {
               uri.host.isNotEmpty) {
             editor.controller.formatText(selectionIndex, selectionLength,
                 NotusAttribute.link.fromString(_inputController.text));
-            Navigator.pop(context);
           } else {
             error = true;
           }

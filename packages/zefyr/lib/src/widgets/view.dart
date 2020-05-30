@@ -4,19 +4,19 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:notus/notus.dart';
-import 'package:zefyr/src/widgets/expandable.dart';
-import 'package:zefyr/src/widgets/latex.dart';
-import 'package:zefyr/src/widgets/video.dart';
 import 'package:zefyr/zefyr.dart';
 
 import 'code.dart';
 import 'common.dart';
+import 'expandable.dart';
 import 'image.dart';
+import 'latex.dart';
 import 'list.dart';
 import 'paragraph.dart';
 import 'quote.dart';
 import 'scope.dart';
 import 'theme.dart';
+import 'video.dart';
 
 /// Non-scrollable read-only view of Notus rich text documents.
 @experimental
@@ -25,16 +25,14 @@ class ZefyrView extends StatefulWidget {
   final ZefyrImageDelegate imageDelegate;
   final ZefyrVideoDelegate videoDelegate;
   final ZefyrAttrDelegate attrDelegate;
-  final double latexHeight;
 
-  const ZefyrView(
-      {Key key,
-      @required this.document,
-      this.imageDelegate,
-      this.videoDelegate,
-      this.attrDelegate,
-      this.latexHeight})
-      : super(key: key);
+  const ZefyrView({
+    Key key,
+    @required this.document,
+    this.imageDelegate,
+    this.videoDelegate,
+    this.attrDelegate,
+  }) : super(key: key);
 
   @override
   ZefyrViewState createState() => ZefyrViewState();
@@ -118,7 +116,7 @@ class ZefyrViewState extends State<ZefyrView> {
     if (blockStyle == NotusAttribute.block.expandable) {
       return ZefyrExpandable(node: block);
     } else if (blockStyle == NotusAttribute.block.latex) {
-      return ZefyrLatex(node: block, height: widget.latexHeight);
+      return ZefyrLatex(node: block);
     } else if (blockStyle == NotusAttribute.block.code) {
       return ZefyrCode(node: block);
     } else if (blockStyle == NotusAttribute.block.bulletList) {

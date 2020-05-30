@@ -324,6 +324,107 @@ class _ImageButtonState extends State<ImageButton> {
   }
 }
 
+class LatexButton extends StatefulWidget {
+  const LatexButton({Key key, @required this.editor}) : super(key: key);
+
+  final ZefyrScope editor;
+
+  @override
+  _LatexButtonState createState() => _LatexButtonState();
+}
+
+class _LatexButtonState extends State<LatexButton> {
+  ZefyrScope get editor => widget.editor;
+  final FocusNode _focusNode = FocusNode();
+  final TextEditingController controller = TextEditingController();
+  ZefyrToolbarState toolbar;
+  int selectionIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    toolbar = ZefyrToolbar.of(context);
+
+    selectionIndex = editor.controller.selection.start;
+
+    return toolbar.buildButton(
+      context,
+      ZefyrToolbarAction.latex,
+      onPressed: showOverlay,
+    );
+  }
+
+  void showOverlay() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final theme = Theme.of(context);
+        final color = theme.primaryIconTheme.color;
+        final style = theme.textTheme.subtitle1.copyWith(color: color);
+
+        return StatefulBuilder(
+            builder: (context, setState) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(22.0)),
+                  title: Text(
+                    "Add Latex",
+                    style: TextStyle(fontSize: 22.0),
+                  ),
+                  content: Container(
+                      height: 100,
+                      width: 800,
+                      child: TextField(
+                        style: style,
+                        keyboardType: TextInputType.text,
+                        focusNode: _focusNode,
+                        controller: controller,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor:
+                              theme.primaryColorBrightness == Brightness.light
+                                  ? Colors.grey.shade300
+                                  : Colors.grey.shade800,
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.all(10.0),
+                        ),
+                      )),
+                  actions: [
+                    FlatButton(
+                      child: Text(
+                        "Done",
+                        style: TextStyle(
+                            color: Color.fromRGBO(88, 60, 26, 1),
+                            fontSize: 17.0),
+                      ),
+                      onPressed: () {
+                        editor.controller.document
+                            .insert(selectionIndex, controller.text);
+
+                        NotusAttribute attribute =
+                            kZefyrToolbarAttributeActions[
+                                ZefyrToolbarAction.latex];
+                        editor.formatSelection(attribute);
+
+                        Navigator.pop(context);
+                      },
+                    ),
+                    FlatButton(
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(
+                              color: Color.fromRGBO(88, 60, 26, 1),
+                              fontSize: 17.0),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }),
+                  ],
+                ));
+      },
+    );
+  }
+}
+
 class LinkButton extends StatefulWidget {
   const LinkButton({Key key, @required this.editor}) : super(key: key);
 

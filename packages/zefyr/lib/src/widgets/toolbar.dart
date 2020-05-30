@@ -54,7 +54,6 @@ final kZefyrToolbarAttributeActions = <ZefyrToolbarAction, NotusAttributeKey>{
   ZefyrToolbarAction.code: NotusAttribute.block.code,
   ZefyrToolbarAction.quote: NotusAttribute.block.quote,
   ZefyrToolbarAction.horizontalRule: NotusAttribute.embed.horizontalRule,
-  ZefyrToolbarAction.video: NotusAttribute.block.video,
   ZefyrToolbarAction.latex: NotusAttribute.block.latex,
   ZefyrToolbarAction.expandable: NotusAttribute.block.expandable,
 };
@@ -269,7 +268,7 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
       buildButton(context, ZefyrToolbarAction.horizontalRule),
       if (editor.videoDelegate != null) VideoButton(),
       if (editor.imageDelegate != null) ImageButton(),
-      buildButton(context, ZefyrToolbarAction.latex),
+      LatexButton(editor: widget.editor),
       buildButton(context, ZefyrToolbarAction.expandable),
     ];
     return buttons;

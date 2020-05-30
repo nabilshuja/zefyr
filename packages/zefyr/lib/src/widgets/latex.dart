@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_tex/flutter_tex.dart';
-import 'package:notus/notus.dart';
+import 'package:meta/meta.dart';
 
-import 'common.dart';
-import 'scope.dart';
+import '../../zefyr.dart';
 import 'theme.dart';
 
 /// Represents a code snippet in Zefyr editor.
@@ -21,30 +22,19 @@ class ZefyrLatex extends StatelessWidget {
     var scope = ZefyrScope.of(context);
     List<Widget> items = [];
     Widget latexView;
-    String text = '';
 
     if (scope.mode.canEdit) {
       for (var line in node.children) {
         items.add(_buildLine(
             line, zefyrTheme.attributeTheme.code.textStyle, context));
       }
-    } else {
-      for (var line in node.children) {
-        text += line.toPlainText();
-      }
-      latexView = TeXView(
-        keepAlive: true,
-        teXHTML: text,
-        height: height ?? 75,
-        renderingEngine: RenderingEngine.Katex,
-        onRenderFinished: (height) {
-          print("Widget Height is : $height");
-        },
-        onPageFinished: (string) {
-          print("Page Loading finished");
-        },
-      );
     }
+
+    latexView = TeXView(
+        keepAlive: true,
+        teXHTML: node.toPlainText(),
+        height: height ?? 75,
+        renderingEngine: RenderingEngine.Katex);
 
     return Container(
       child: scope.mode.canEdit

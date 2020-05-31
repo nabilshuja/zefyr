@@ -397,6 +397,8 @@ class _LatexButtonState extends State<LatexButton> {
                             fontSize: 17.0),
                       ),
                       onPressed: () {
+                        controller.text = '\$\$' + controller.text + '\$\$';
+
                         editor.controller.document
                             .insert(selectionIndex, controller.text);
 

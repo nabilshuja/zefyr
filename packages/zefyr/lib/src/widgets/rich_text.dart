@@ -1,7 +1,6 @@
 // Copyright (c) 2018, the Zefyr project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
@@ -10,31 +9,7 @@ import 'package:notus/notus.dart';
 
 import 'caret.dart';
 import 'editable_box.dart';
-
-bool selectionIntersectsWith(int base, int extent, TextSelection selection) {
-  return base <= selection.end && selection.start <= extent;
-}
-
-// return a point between base and extent no matter what!
-int selectionPointRestrict(int base, int extent, int point) {
-  if (point < base) return base;
-  if (point > extent) return extent;
-  return point;
-}
-
-TextSelection getSelectionRebase(
-    int base, int extent, TextSelection selection) {
-  if (!selectionIntersectsWith(base, extent, selection)) {
-    return null;
-  }
-
-  int newBase =
-      selectionPointRestrict(base, extent, selection.baseOffset) - base;
-  int newExtent =
-      selectionPointRestrict(base, extent, selection.extentOffset) - base;
-
-  return selection.copyWith(baseOffset: newBase, extentOffset: newExtent);
-}
+import 'selection_utils.dart';
 
 /// Represents single paragraph of Zefyr rich-text.
 class ZefyrRichText extends LeafRenderObjectWidget {
@@ -92,6 +67,7 @@ class RenderZefyrParagraph extends RenderParagraph
           maxLines: maxLines,
         );
 
+  @override
   LineNode node;
 
   @override
@@ -105,9 +81,9 @@ class RenderZefyrParagraph extends RenderParagraph
     if (!intersectsWithSelection(documentSelection)) {
       return null;
     }
-    int nodeBase = node.documentOffset;
-    int nodeExtent = nodeBase + node.length;
-    return getSelectionRebase(nodeBase, nodeExtent, documentSelection);
+    final nodeBase = node.documentOffset;
+    final nodeExtent = nodeBase + node.length;
+    return selectionRestrict(nodeBase, nodeExtent, documentSelection);
   }
 
   @override
@@ -143,7 +119,7 @@ class RenderZefyrParagraph extends RenderParagraph
 
   // the trailing \n is not handled by the span, drop it from the sel.
   // otherwise getBoxesForSelection fails on the web. (out of range)
-  TextSelection trimSelection(TextSelection selection) {
+  TextSelection _trimSelection(TextSelection selection) {
     if (selection.baseOffset > node.length - 1) {
       selection = selection.copyWith(baseOffset: node.length - 1);
     }
@@ -157,7 +133,7 @@ class RenderZefyrParagraph extends RenderParagraph
   // edge-case with our TextSpan objects not having last line-break character.
   @override
   List<ui.TextBox> getEndpointsForSelection(TextSelection selection) {
-    TextSelection local = getLocalSelection(selection);
+    final local = getLocalSelection(selection);
     if (local.isCollapsed) {
       final caret = CursorPainter.buildPrototype(preferredLineHeight);
       final offset = getOffsetForCaret(local.extent, caret);
@@ -172,7 +148,7 @@ class RenderZefyrParagraph extends RenderParagraph
       ];
     }
 
-    final result = getBoxesForSelection(trimSelection(local)).toList();
+    final result = getBoxesForSelection(_trimSelection(local)).toList();
 
     return result;
   }
@@ -206,8 +182,8 @@ class RenderZefyrParagraph extends RenderParagraph
   /// Returns `true` if this paragraph intersects with document [selection].
   @override
   bool intersectsWithSelection(TextSelection selection) {
-    final int base = node.documentOffset;
-    final int extent = base + node.length;
+    final base = node.documentOffset;
+    final extent = base + node.length;
     return selectionIntersectsWith(base, extent, selection);
   }
 
@@ -220,9 +196,9 @@ class RenderZefyrParagraph extends RenderParagraph
     }
     var localSel = getLocalSelection(selection);
 
-    _selectionRects ??= getBoxesForSelection(trimSelection(localSel));
-    final Paint paint = Paint()..color = selectionColor;
-    for (ui.TextBox box in _selectionRects) {
+    _selectionRects ??= getBoxesForSelection(_trimSelection(localSel));
+    final paint = Paint()..color = selectionColor;
+    for (var box in _selectionRects) {
       context.canvas.drawRect(box.toRect().shift(offset), paint);
     }
     _lastPaintedSelection = selection;

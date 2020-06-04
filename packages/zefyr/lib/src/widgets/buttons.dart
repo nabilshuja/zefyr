@@ -594,7 +594,7 @@ class _LinkButtonState extends State<LinkButton> {
   Widget buildOverlay(BuildContext context, setState) {
     final style = editor.selectionStyle;
 
-    String value = 'Tap to edit link';
+    var value = 'Tap to edit link';
     if (style.contains(NotusAttribute.link)) {
       value = style.value(NotusAttribute.link);
     }

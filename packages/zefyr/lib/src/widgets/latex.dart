@@ -18,8 +18,9 @@ class ZefyrLatex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final zefyrTheme = ZefyrTheme.of(context);
+    final theme = Theme.of(context);
     var scope = ZefyrScope.of(context);
-    List<Widget> items = [];
+    var items = <Widget>[];
     Widget latexView;
 
     if (scope.mode.canEdit) {
@@ -35,7 +36,15 @@ class ZefyrLatex extends StatelessWidget {
         height: height ?? 75,
         renderingEngine: RenderingEngine.Katex);
 
+    final color = theme.primaryColorBrightness == Brightness.light
+        ? Colors.grey.shade200
+        : Colors.grey.shade400;
+
     return Container(
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(3.0),
+      ),
       child: scope.mode.canEdit
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.stretch, children: items)

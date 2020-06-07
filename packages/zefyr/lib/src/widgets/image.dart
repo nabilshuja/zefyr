@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
@@ -62,8 +63,9 @@ class _ZefyrImageState extends State<ZefyrImage> {
     final theme = ZefyrTheme.of(context);
     final image = widget.delegate.buildImage(context, imageSource);
     return _EditableImage(
-      child: Padding(
+      child: Container(
         padding: theme.defaultLineTheme.padding,
+        color: Colors.grey[200],
         child: image,
       ),
       node: widget.node,

@@ -366,7 +366,7 @@ class _LatexButtonState extends State<LatexButton> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(22.0)),
                   title: Text(
-                    "Add Latex",
+                    'Add Latex',
                     style: TextStyle(fontSize: 22.0),
                   ),
                   content: Container(
@@ -401,7 +401,8 @@ class _LatexButtonState extends State<LatexButton> {
 
                         editor.controller.document
                             .insert(selectionIndex, controller.text);
-
+                        editor.controller.document
+                            .insert(controller.text.length, '\n\n');
                         NotusAttribute attribute =
                             kZefyrToolbarAttributeActions[
                                 ZefyrToolbarAction.latex];
@@ -412,7 +413,7 @@ class _LatexButtonState extends State<LatexButton> {
                     ),
                     FlatButton(
                         child: Text(
-                          "Cancel",
+                          'Cancel',
                           style: TextStyle(
                               color: Color.fromRGBO(88, 60, 26, 1),
                               fontSize: 17.0),

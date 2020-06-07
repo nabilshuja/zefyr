@@ -129,9 +129,6 @@ class NotusAttribute<T> implements NotusAttributeBuilder<T> {
   /// Alias for [NotusAttribute.block.latex].
   static NotusAttribute<String> get latex => block.latex;
 
-  /// Alias for [NotusAttribute.block.video].
-  static NotusAttribute<String> get video => block.video;
-
   /// Alias for [NotusAttribute.block.expandable].
   static NotusAttribute<String> get expandable => block.expandable;
 

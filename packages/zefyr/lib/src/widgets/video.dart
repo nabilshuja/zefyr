@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
@@ -55,8 +56,9 @@ class _ZefyrVideoState extends State<ZefyrVideo> {
     final theme = ZefyrTheme.of(context);
     final video = widget.delegate.buildVideo(context, videoSource);
     return _EditableVideo(
-      child: Padding(
+      child: Container(
         padding: theme.defaultLineTheme.padding,
+        color: Colors.grey[200],
         child: video,
       ),
       node: widget.node,
@@ -106,17 +108,17 @@ class RenderEditableVideo extends RenderBox
   TextSelection getLocalSelection(TextSelection documentSelection) {
     if (!intersectsWithSelection(documentSelection)) return null;
 
-    int nodeBase = node.documentOffset;
-    int nodeExtent = nodeBase + node.length;
-    int base = math.max(0, documentSelection.baseOffset - nodeBase);
-    int extent =
+    var nodeBase = node.documentOffset;
+    var nodeExtent = nodeBase + node.length;
+    var base = math.max(0, documentSelection.baseOffset - nodeBase);
+    var extent =
         math.min(documentSelection.extentOffset, nodeExtent) - nodeBase;
     return documentSelection.copyWith(baseOffset: base, extentOffset: extent);
   }
 
   @override
   List<ui.TextBox> getEndpointsForSelection(TextSelection selection) {
-    TextSelection local = getLocalSelection(selection);
+    var local = getLocalSelection(selection);
     if (local.isCollapsed) {
       final dx = local.extentOffset == 0 ? _childOffset.dx : size.width;
       return [
@@ -135,7 +137,7 @@ class RenderEditableVideo extends RenderBox
 
   @override
   TextPosition getPositionForOffset(Offset offset) {
-    int position = node.documentOffset;
+    var position = node.documentOffset;
 
     if (offset.dx > size.width / 2) {
       position++;
@@ -151,15 +153,15 @@ class RenderEditableVideo extends RenderBox
 
   @override
   bool intersectsWithSelection(TextSelection selection) {
-    final int base = node.documentOffset;
-    final int extent = base + node.length;
+    final base = node.documentOffset;
+    final extent = base + node.length;
     return base <= selection.extentOffset && selection.baseOffset <= extent;
   }
 
   @override
   Offset getOffsetForCaret(TextPosition position, Rect caretPrototype) {
     final pos = position.offset - node.documentOffset;
-    Offset caretOffset = _childOffset - Offset(kHorizontalPadding, 0.0);
+    var caretOffset = _childOffset - Offset(kHorizontalPadding, 0.0);
     if (pos == 1) {
       caretOffset =
           caretOffset + Offset(_lastChildSize.width + kHorizontalPadding, 0.0);
@@ -173,7 +175,7 @@ class RenderEditableVideo extends RenderBox
     final localSelection = getLocalSelection(selection);
     assert(localSelection != null);
     if (!localSelection.isCollapsed) {
-      final Paint paint = Paint()
+      final paint = Paint()
         ..color = selectionColor
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3.0;
@@ -183,6 +185,7 @@ class RenderEditableVideo extends RenderBox
     }
   }
 
+  @override
   void paint(PaintingContext context, Offset offset) {
     super.paint(context, offset + _childOffset);
   }
@@ -210,9 +213,9 @@ class RenderEditableVideo extends RenderBox
       final width = constraints.maxWidth - kHorizontalPadding * 2;
       final childConstraints = constraints.copyWith(
         minWidth: 0.0,
-        maxWidth: 641,
+        maxWidth: 640,
         minHeight: 0.0,
-        maxHeight: 361,
+        maxHeight: 360,
       );
       child.layout(childConstraints, parentUsesSize: true);
       _lastChildSize = child.size;

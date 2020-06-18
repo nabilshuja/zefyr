@@ -63,7 +63,7 @@ class _ZefyrLineState extends State<ZefyrLine> {
       switch (theme.platform) {
         case TargetPlatform.iOS:
         case TargetPlatform.macOS:
-          cursorColor ??= CupertinoTheme.of(context).primaryColor;
+          cursorColor ??= Colors.black;
           break;
 
         case TargetPlatform.android:
@@ -71,7 +71,7 @@ class _ZefyrLineState extends State<ZefyrLine> {
         case TargetPlatform.windows:
         case TargetPlatform.macOS:
         case TargetPlatform.linux:
-          cursorColor = theme.cursorColor;
+          cursorColor = Colors.black;
           break;
       }
 
@@ -88,10 +88,31 @@ class _ZefyrLineState extends State<ZefyrLine> {
       content = CompositedTransformTarget(link: _link, child: content);
     }
 
-    if (widget.padding != null) {
-      return Padding(padding: widget.padding, child: content);
+    if (scope.isEditable) {
+      if (widget.padding != null) {
+        return Container(
+            margin: EdgeInsets.symmetric(vertical: 2),
+            padding: EdgeInsets.symmetric(
+                horizontal: 10, vertical: widget.padding.vertical),
+            decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: content);
+      }
+
+      return Container(
+          margin: EdgeInsets.symmetric(vertical: 2),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: content);
+    } else {
+      if (widget.padding != null) {
+        return Padding(padding: widget.padding, child: content);
+      }
+      return content;
     }
-    return content;
   }
 
   void ensureVisible(BuildContext context, ZefyrScope scope) {
@@ -140,7 +161,6 @@ class _ZefyrLineState extends State<ZefyrLine> {
     if (attrs.contains(NotusAttribute.link)) {
       final tapGestureRecognizer = TapGestureRecognizer();
       tapGestureRecognizer.onTap = () {
-        print("delegate: ${scope.attrDelegate}");
         if (scope.attrDelegate?.onLinkTap != null) {
           scope.attrDelegate.onLinkTap(attrs.get(NotusAttribute.link).value);
         }

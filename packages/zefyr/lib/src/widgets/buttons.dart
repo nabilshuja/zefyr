@@ -401,8 +401,6 @@ class _LatexButtonState extends State<LatexButton> {
 
                         editor.controller.document
                             .insert(selectionIndex, controller.text);
-                        editor.controller.document
-                            .insert(controller.text.length, '\n\n');
                         NotusAttribute attribute =
                             kZefyrToolbarAttributeActions[
                                 ZefyrToolbarAction.latex];

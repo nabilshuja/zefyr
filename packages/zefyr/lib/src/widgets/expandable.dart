@@ -44,9 +44,12 @@ class _ZefyrExpandableState extends State<ZefyrExpandable> {
               children: widget.node.children?.map((line) {
                     return widget.node.children.first == line
                         ? Container()
-                        : ZefyrLine(
-                            node: line,
-                            style: zefyrTheme.attributeTheme.code.textStyle);
+                        : Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: ZefyrLine(
+                                node: line,
+                                style:
+                                    zefyrTheme.attributeTheme.code.textStyle));
                   })?.toList() ??
                   [Container()]));
     }

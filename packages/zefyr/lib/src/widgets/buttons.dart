@@ -397,14 +397,20 @@ class _LatexButtonState extends State<LatexButton> {
                             fontSize: 17.0),
                       ),
                       onPressed: () {
-                        controller.text = '\$\$' + controller.text + '\$\$';
+                        controller.text = '\$\$' + controller.text + '\$\$\n';
 
                         editor.controller.document
                             .insert(selectionIndex, controller.text);
+
                         NotusAttribute attribute =
                             kZefyrToolbarAttributeActions[
                                 ZefyrToolbarAction.latex];
                         editor.formatSelection(attribute);
+
+                        editor.updateSelection(TextSelection(
+                            baseOffset: selectionIndex + controller.text.length,
+                            extentOffset:
+                                selectionIndex + controller.text.length));
 
                         Navigator.pop(context);
                       },

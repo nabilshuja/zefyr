@@ -91,21 +91,19 @@ class _ZefyrLineState extends State<ZefyrLine> {
     if (scope.isEditable) {
       if (widget.padding != null) {
         return Container(
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(240, 242, 242, 1),
+                borderRadius: BorderRadius.all(Radius.circular(15))),
             margin: EdgeInsets.symmetric(vertical: 2),
             padding: EdgeInsets.symmetric(
                 horizontal: 10, vertical: widget.padding.vertical),
-            decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.all(Radius.circular(10))),
             child: content);
       }
 
       return Container(
-          margin: EdgeInsets.symmetric(vertical: 2),
-          padding: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+              color: Color.fromRGBO(240, 242, 242, 1),
+              borderRadius: BorderRadius.all(Radius.circular(15))),
           child: content);
     } else {
       if (widget.padding != null) {
@@ -154,16 +152,24 @@ class _ZefyrLineState extends State<ZefyrLine> {
   TextSpan _segmentToTextSpan(
       Node node, ZefyrThemeData theme, ZefyrScope scope) {
     final TextNode segment = node;
-    final attrs = segment.style;
+    final style = segment.style;
 
     GestureRecognizer recognizer;
 
-    if (attrs.contains(NotusAttribute.link)) {
+    if (style.contains(NotusAttribute.link)) {
       final tapGestureRecognizer = TapGestureRecognizer();
       tapGestureRecognizer.onTap = () {
         if (scope.attrDelegate?.onLinkTap != null) {
-          scope.attrDelegate.onLinkTap(attrs.get(NotusAttribute.link).value);
+          scope.attrDelegate.onLinkTap(style.get(NotusAttribute.link).value);
         }
+      };
+      recognizer = tapGestureRecognizer;
+    }
+
+    if (style.contains(NotusAttribute.expandable)) {
+      final tapGestureRecognizer = TapGestureRecognizer();
+      tapGestureRecognizer.onTap = () {
+        print('something');
       };
       recognizer = tapGestureRecognizer;
     }
@@ -171,7 +177,7 @@ class _ZefyrLineState extends State<ZefyrLine> {
     return TextSpan(
       text: segment.value,
       recognizer: recognizer,
-      style: _getTextStyle(attrs, theme),
+      style: _getTextStyle(style, theme),
     );
   }
 

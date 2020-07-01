@@ -369,33 +369,50 @@ class _LatexButtonState extends State<LatexButton> {
                     'Add Latex',
                     style: TextStyle(fontSize: 22.0),
                   ),
-                  content: Container(
-                      height: 100,
-                      width: 800,
-                      child: TextField(
-                        style: style,
-                        keyboardType: TextInputType.text,
-                        focusNode: _focusNode,
-                        controller: controller,
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor:
-                              theme.primaryColorBrightness == Brightness.light
-                                  ? Colors.grey.shade300
-                                  : Colors.grey.shade800,
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.all(10.0),
-                        ),
-                      )),
+                  content: IntrinsicHeight(
+                      child: Column(children: [
+                    Container(
+                        height: 100,
+                        width: 800,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                        child: TextField(
+                          style: style,
+                          keyboardType: TextInputType.text,
+                          focusNode: _focusNode,
+                          controller: controller,
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor:
+                                theme.primaryColorBrightness == Brightness.light
+                                    ? Colors.grey.shade100
+                                    : Colors.grey.shade800,
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(10.0),
+                          ),
+                        )),
+                    FlatButton(
+                      padding: EdgeInsets.all(0),
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      child: Text("Try out your equation here!",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              decoration: TextDecoration.underline)),
+                      onPressed: () async {
+                        String url =
+                            'https://latex.codecogs.com/legacy/eqneditor/editor.php';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        }
+                      },
+                    ),
+                  ])),
                   actions: [
                     FlatButton(
-                      child: Text(
-                        "Done",
-                        style: TextStyle(
-                            color: Color.fromRGBO(88, 60, 26, 1),
-                            fontSize: 17.0),
-                      ),
+                      child: Text("Done"),
                       onPressed: () {
                         controller.text = '\$\$' + controller.text + '\$\$\n';
 
@@ -419,8 +436,8 @@ class _LatexButtonState extends State<LatexButton> {
                         child: Text(
                           'Cancel',
                           style: TextStyle(
-                              color: Color.fromRGBO(88, 60, 26, 1),
-                              fontSize: 17.0),
+                            color: Color.fromRGBO(38, 38, 38, 1),
+                          ),
                         ),
                         onPressed: () {
                           Navigator.pop(context);

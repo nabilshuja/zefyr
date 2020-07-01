@@ -374,9 +374,6 @@ class _LatexButtonState extends State<LatexButton> {
                     Container(
                         height: 100,
                         width: 800,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
                         child: TextField(
                           style: style,
                           keyboardType: TextInputType.text,
@@ -389,7 +386,15 @@ class _LatexButtonState extends State<LatexButton> {
                                 theme.primaryColorBrightness == Brightness.light
                                     ? Colors.grey.shade100
                                     : Colors.grey.shade800,
-                            border: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(13.0),
+                              ),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
                             contentPadding: const EdgeInsets.all(10.0),
                           ),
                         )),

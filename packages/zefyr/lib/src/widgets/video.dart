@@ -58,7 +58,6 @@ class _ZefyrVideoState extends State<ZefyrVideo> {
     return _EditableVideo(
       child: Container(
         padding: theme.defaultLineTheme.padding,
-        color: Colors.grey[200],
         child: video,
       ),
       node: widget.node,

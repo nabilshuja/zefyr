@@ -65,7 +65,6 @@ class _ZefyrImageState extends State<ZefyrImage> {
     return _EditableImage(
       child: Container(
         padding: theme.defaultLineTheme.padding,
-        color: Colors.grey[200],
         child: image,
       ),
       node: widget.node,

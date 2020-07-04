@@ -48,8 +48,7 @@ class _ZefyrExpandableState extends State<ZefyrExpandable> {
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: ZefyrLine(
                                 node: line,
-                                style:
-                                    zefyrTheme.attributeTheme.code.textStyle));
+                                style: zefyrTheme.defaultLineTheme.textStyle));
                   })?.toList() ??
                   [Container()]));
     }

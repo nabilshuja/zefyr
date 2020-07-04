@@ -23,13 +23,13 @@ class _ZefyrExpandableState extends State<ZefyrExpandable> {
   Widget build(BuildContext context) {
     final zefyrTheme = ZefyrTheme.of(context);
     var scope = ZefyrScope.of(context);
-    List<Widget> items = [];
+    var items = <Widget>[];
     Widget expandableView;
 
     if (scope.mode.canEdit) {
       for (var line in widget.node.children) {
-        items.add(_buildLine(
-            line, zefyrTheme.attributeTheme.code.textStyle, context));
+        items.add(_buildLine(line, zefyrTheme.defaultLineTheme.textStyle,
+            context, widget.node.children.first == line));
       }
     } else {
       expandableView = ExpandablePanel(
@@ -60,8 +60,23 @@ class _ZefyrExpandableState extends State<ZefyrExpandable> {
         : expandableView ?? Container();
   }
 
-  Widget _buildLine(Node node, TextStyle style, BuildContext context) {
+  Widget _buildLine(
+      Node node, TextStyle style, BuildContext context, bool isFirst) {
+    final zefyrTheme = ZefyrTheme.of(context);
+
     LineNode line = node;
-    return ZefyrLine(node: line, style: style);
+    return Row(children: [
+      isFirst
+          ? Icon(Icons.keyboard_arrow_right)
+          : SizedBox(
+              width: 25,
+            ),
+      Expanded(
+          child: ZefyrLine(
+              node: line,
+              style: isFirst
+                  ? zefyrTheme.attributeTheme.heading3.textStyle
+                  : style))
+    ]);
   }
 }

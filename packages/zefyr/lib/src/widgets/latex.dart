@@ -25,7 +25,10 @@ class ZefyrLatex extends StatelessWidget {
     if (scope.mode.canEdit) {
       for (var line in node.children) {
         items.add(_buildLine(
-            line, zefyrTheme.attributeTheme.code.textStyle, context));
+            line,
+            zefyrTheme.defaultLineTheme.textStyle
+                .merge(TextStyle(color: Color.fromRGBO(250, 140, 180, 1))),
+            context));
       }
     }
 
@@ -45,6 +48,9 @@ class ZefyrLatex extends StatelessWidget {
 
   Widget _buildLine(Node node, TextStyle style, BuildContext context) {
     LineNode line = node;
-    return ZefyrLine(node: line, style: style);
+    return Row(children: [
+      Icon(Icons.functions),
+      Expanded(child: ZefyrLine(node: line, style: style))
+    ]);
   }
 }

@@ -76,23 +76,23 @@ class _ZefyrLineState extends State<ZefyrLine> {
       }
 
       content = Container(
-          decoration: BoxDecoration(
-              color: widget.node.hasEmbed
-                  ? Colors.transparent
-                  : Color.fromRGBO(240, 242, 242, 1),
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-          padding: EdgeInsets.symmetric(
-              horizontal: 10, vertical: widget.node.hasEmbed ? 5 : 0),
-          child: EditableBox(
-            child: content,
-            node: widget.node,
-            layerLink: _link,
-            renderContext: scope.renderContext,
-            showCursor: scope.showCursor,
-            selection: scope.selection,
-            selectionColor: theme.textSelectionColor,
-            cursorColor: cursorColor,
-          ));
+        constraints: BoxConstraints(minHeight: 20),
+        decoration: BoxDecoration(
+            color: Color.fromRGBO(240, 242, 242, 1),
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        padding: EdgeInsets.symmetric(
+            horizontal: 10, vertical: widget.node.hasEmbed ? 5 : 0),
+        child: EditableBox(
+          child: content,
+          node: widget.node,
+          layerLink: _link,
+          renderContext: scope.renderContext,
+          showCursor: scope.showCursor,
+          selection: scope.selection,
+          selectionColor: theme.textSelectionColor,
+          cursorColor: cursorColor,
+        ),
+      );
       content = CompositedTransformTarget(link: _link, child: content);
     }
 

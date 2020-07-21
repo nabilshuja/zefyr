@@ -77,7 +77,7 @@ class RenderHorizontalRule extends RenderEditableBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     final rect = Rect.fromLTWH(0.0, 0.0, size.width, _kThickness);
-    final paint = ui.Paint()..color = Colors.grey.shade200;
+    final paint = ui.Paint()..color = Colors.grey.shade800;
     context.canvas.drawRect(rect.shift(offset), paint);
   }
 

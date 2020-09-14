@@ -35,10 +35,10 @@ class ZefyrApp extends StatelessWidget {
       title: 'Zefyr Editor',
       home: HomePage(),
       routes: {
-        "/fullPage": buildFullPage,
-        "/form": buildFormPage,
-        "/view": buildViewPage,
-        "/textinput": buildTextFieldPage,
+        '/fullPage': buildFullPage,
+        '/form': buildFormPage,
+        '/view': buildViewPage,
+        '/textinput': buildTextFieldPage,
       },
     );
   }
